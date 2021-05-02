@@ -1,9 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 from searchAPI import returnSearch,returnMovieDetailsResponse,returnTVShowDetailsResponse
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='./templates',static_url_path='/')
 BASE_ROUTE = '/api/v1'
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+
 @app.route(BASE_ROUTE + '/<string:name>')
 def search(name):
     return returnSearch(name)
